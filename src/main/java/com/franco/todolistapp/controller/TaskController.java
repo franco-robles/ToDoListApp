@@ -38,7 +38,7 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "the task has been found"),
             @ApiResponse(responseCode = "500", description = "the entered id is not correct")
     })
-    @Operation(summary = "Get all tasks")
+    @Operation(summary = "Get task by id")
     @GetMapping("/find/{id}")
     public ResponseEntity<Task> findById(@PathVariable("id") Long id){
         return  this.taskService.findById(id);
