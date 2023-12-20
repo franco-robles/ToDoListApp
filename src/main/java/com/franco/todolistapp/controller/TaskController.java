@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @ApiResponse(responseCode = "200", description = "the task has been successfully created")
+    @ApiResponse(responseCode = "201", description = "the task has been successfully created")
     @Operation(summary = "Create a new task")
     @PostMapping("/createTask")
     public ResponseEntity<Task> createTask(@RequestBody TaskInDto in){
@@ -36,8 +37,19 @@ public class TaskController {
     }
 
     @ApiResponses(value={
+            @ApiResponse(responseCode = "204", description = "id does not exist in db"),
+            @ApiResponse(responseCode = "200", description = "the task has been found"),
+            @ApiResponse(responseCode = "500", description = "the entered id is not correct")
+    })
+    @Operation(summary = "Get all tasks")
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Task> findById(@PathVariable("id") Long id){
+        return  this.taskService.findById(id);
+    }
+
+    @ApiResponses(value={
             @ApiResponse(responseCode = "204", description = "no task to show"),
-            @ApiResponse(responseCode = "200", description = "tasks exist in db")
+            @ApiResponse(responseCode = "200", description = "returned tasks")
     })
     @Operation(summary = "Get all tasks")
     @GetMapping("/findAll")
@@ -45,10 +57,14 @@ public class TaskController {
         return  this.taskService.findAll();
     }
 
-
+    @ApiResponses(value={
+            @ApiResponse(responseCode = "204", description = "the request was fine but there is no task to be shown"),
+            @ApiResponse(responseCode = "200", description = "the request was fine "),
+            @ApiResponse(responseCode = "400", description = "some attributes are not allowed for sorting.")
+    })
     @Operation(summary = "Get task by pages")
     @GetMapping("/tasks")
-    public ResponseEntity<Page<Task>> findPage(@PageableDefault(size = 3, page = 0, sort = "id") Pageable pageable){
+    public ResponseEntity<Page<Task>> findPage(@PageableDefault(size = 7, page = 0, sort = "id") Pageable pageable){
         return  this.taskService.findTasksPaged(pageable);
     }
 
