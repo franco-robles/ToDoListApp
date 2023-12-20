@@ -78,7 +78,8 @@ public class TaskController {
 
     @ApiResponses(value={
             @ApiResponse(responseCode = "204", description = "id exists in the database and was marked as finished"),
-            @ApiResponse(responseCode = "404", description = "nonexistent id")
+            @ApiResponse(responseCode = "404", description = "nonexistent id"),
+            @ApiResponse(responseCode = "500", description = "the entered id is not correct")
     })
     @Operation(summary = "Mark task as Finished")
     @PatchMapping("/markAsFinished/{id}")
@@ -88,14 +89,14 @@ public class TaskController {
         }
 
     @ApiResponses(value={
-           @ApiResponse(responseCode = "204", description = "id existed and was eliminated"),
-           @ApiResponse(responseCode = "404", description = "nonexistent id")
+            @ApiResponse(responseCode = "204", description = "id existed and was eliminated"),
+            @ApiResponse(responseCode = "404", description = "nonexistent id"),
+            @ApiResponse(responseCode = "500", description = "the entered id is not correct")
     })
     @Operation(summary = "Delete task for ID")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable("id") Long id){
-         this.taskService.deleteTaskById(id);
-         return ResponseEntity.noContent().build();
+         return this.taskService.deleteTaskById(id);
     }
 
 
