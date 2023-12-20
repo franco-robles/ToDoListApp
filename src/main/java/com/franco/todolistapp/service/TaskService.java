@@ -88,14 +88,14 @@ public class TaskService {
     /** update the completed attribute and update the task status if the current date is later than the estimated completion date. **/
     @Transactional
     public ResponseEntity<Object> updateTaskAsFinished(Long id){
-        try{
-            if (id<=0 || id == null){throw new ToDoExceptions("id cannot be less or equal to 0", HttpStatus.BAD_REQUEST);}
-            Task task = this.repository.findById(id)
-                    .orElseThrow(()->new ToDoExceptions("task not found", HttpStatus.NOT_FOUND));
-            markTaskFinisher(id, task);
+        if (id <= 0 || id == null) {
+            throw new ToDoExceptions("id cannot be less or equal to 0", HttpStatus.BAD_REQUEST);
+        }
+        Optional<Task> task = repository.findById(id);
+        if (task.isPresent()) {
+            markTaskFinisher(id, task.get());
             return ResponseEntity.noContent().build();
-        }catch (Exception e){
-            ToDoExceptions.getLogger().error("Error ocurred when updating task with ID {}: {}", id, e, HttpStatus.NOT_FOUND, e.getMessage(), e.getStackTrace());
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
