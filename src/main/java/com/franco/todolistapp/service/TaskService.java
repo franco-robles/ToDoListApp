@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -35,6 +36,18 @@ public class TaskService {
     /** crate a new task. **/
     public ResponseEntity<Task> createTask(TaskInDto taskInDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(this.repository.save(taskMapper.map(taskInDto)));
+
+    }
+
+    /** find by ID **/
+    public ResponseEntity<Task> findById(Long id){
+        if (id<=0 || id == null){throw new ToDoExceptions("id cannot be less or equal to 0", HttpStatus.BAD_REQUEST);}
+        Optional<Task> task = repository.findById(id);
+        if (task.isPresent()) {
+            return ResponseEntity.ok().body(task.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
 
     }
 
@@ -76,6 +89,7 @@ public class TaskService {
     @Transactional
     public ResponseEntity<Object> updateTaskAsFinished(Long id){
         try{
+            if (id<=0 || id == null){throw new ToDoExceptions("id cannot be less or equal to 0", HttpStatus.BAD_REQUEST);}
             Task task = this.repository.findById(id)
                     .orElseThrow(()->new ToDoExceptions("task not found", HttpStatus.NOT_FOUND));
             markTaskFinisher(id, task);
@@ -87,6 +101,7 @@ public class TaskService {
     }
 
     private void markTaskFinisher(Long id, Task task) {
+        if (id<=0 || id == null){throw new ToDoExceptions("id cannot be less or equal to 0", HttpStatus.BAD_REQUEST);}
         if(LocalDateTime.now().isAfter(task.getEstimateEndTime())){
             this.repository.markTaskAsFinishedAndLate(id);
         }else{
@@ -96,8 +111,9 @@ public class TaskService {
 
     /** remove the task whose parameter is the one received by parameter **/
     @Transactional
-    public ResponseEntity<Object> deleteTaskById(Long id){
+    public ResponseEntity<Void> deleteTaskById(Long id){
         try {
+            if (id<=0 || id == null){throw new ToDoExceptions("id cannot be less or equal to 0", HttpStatus.BAD_REQUEST);}
             Task task = this.repository.findById(id)
                     .orElseThrow(() -> new ToDoExceptions("task not found", HttpStatus.NOT_FOUND));
             this.repository.delete(task);
