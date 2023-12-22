@@ -17,7 +17,7 @@ import java.util.List;
 
 @Tag(name ="Task", description = "Operations for the entity Task")
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/api")
 public class TaskController {
 
     private final TaskService taskService;
@@ -28,7 +28,7 @@ public class TaskController {
 
     @ApiResponse(responseCode = "201", description = "the task has been successfully created")
     @Operation(summary = "Create a new task")
-    @PostMapping("/createTask")
+    @PostMapping("/tasks")
     public ResponseEntity<Task> createTask(@RequestBody TaskInDto in){
         return this.taskService.createTask(in);
     }
@@ -39,7 +39,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "the entered id is not correct")
     })
     @Operation(summary = "Get task by id")
-    @GetMapping("/find/{id}")
+    @GetMapping("/tasks/{id}")
     public ResponseEntity<Task> findById(@PathVariable("id") Long id){
         return  this.taskService.findById(id);
     }
@@ -49,7 +49,7 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "returned tasks")
     })
     @Operation(summary = "Get all tasks")
-    @GetMapping("/findAll")
+    @GetMapping("/tasks")
     public ResponseEntity<List<Task>> findAll(){
         return  this.taskService.findAll();
     }
@@ -60,7 +60,7 @@ public class TaskController {
             @ApiResponse(responseCode = "400", description = "some attributes are not allowed for sorting.")
     })
     @Operation(summary = "Get task by pages")
-    @GetMapping("/tasks")
+    @GetMapping("/tasks/page")
     public ResponseEntity<Page<Task>> findPage(@PageableDefault(size = 7, page = 0, sort = "id") Pageable pageable){
         return  this.taskService.findTasksPaged(pageable);
     }
@@ -70,7 +70,7 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "tasks with selected status exist in db")
     })
     @Operation(summary = "Get all tasks with status=ON_TIME or LATE")
-    @GetMapping("/status/{status}")
+    @GetMapping("/tasks/{status}")
     public ResponseEntity<List<Task>> findAllByTaskStatus(@PathVariable("status")TaskStatus status){
         return this.taskService.findAllByTaskStatus(status) ;
 
@@ -82,7 +82,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "the entered id is not correct")
     })
     @Operation(summary = "Mark task as Finished")
-    @PatchMapping("/markAsFinished/{id}")
+    @PatchMapping("/tasks/{id}")
         public ResponseEntity<Void> markASFinished(@PathVariable("id") Long id){
             this.taskService.updateTaskAsFinished(id);
             return ResponseEntity.noContent().build();
@@ -94,7 +94,7 @@ public class TaskController {
             @ApiResponse(responseCode = "500", description = "the entered id is not correct")
     })
     @Operation(summary = "Delete task for ID")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable("id") Long id){
          return this.taskService.deleteTaskById(id);
     }
