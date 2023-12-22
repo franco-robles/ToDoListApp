@@ -47,3 +47,5 @@ To install the project, follow these steps:
 
 Contributions are welcome. To contribute, create a new branch in the GitHub repository and submit a pull request. 
 
+# License
+This project is distributed under the [MIT License](https://choosealicense.com/licenses/mit/).
