@@ -44,6 +44,19 @@ To install the project, follow these steps:
 - Swagger UI: http://localhost:8080/swagger-ui
 - H2 Console: http://localhost:8080/h2-console
 
+## Tests 
+ The ToDoListApp project uses unit tests to ensure the quality and reliability of the code. Unit tests are written for each class or function to verify that it behaves as expected. 
+ 
+ **TaskService** 
+The TaskService layer is responsible for interacting with taskRepository to create, read, update, and delete tasks. The unit tests for the TaskService layer have a coverage of 100%. The following unit tests have been added to verify the functionality of the TaskService: 
+ * Create task
+ * Read task
+ * Update task
+ * Delete task
+ * Pagination
+ * Status-based retrieval
+ * Error handling
+ * Invalid input
 
 Contributions are welcome. To contribute, create a new branch in the GitHub repository and submit a pull request. 
 
