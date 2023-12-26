@@ -17,6 +17,8 @@ This project provides a **REST API** that allows you to create, read, update, an
 - h2  -v 2.2.224
 - springdoc openapi starter webmvc ui  -v 2.3.0
 - swagger annotations -v 2.2.19
+- junit-jupiter-api -v 5.10.1
+- mockito-core -v 5.8.0
 
 ## Installation
 
