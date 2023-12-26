@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,7 +102,7 @@ public class TaskService {
 
     private void markTaskFinisher(Long id, Task task) {
         if (id<=0 || id == null){throw new ToDoExceptions("id cannot be less or equal to 0", HttpStatus.BAD_REQUEST);}
-        if(LocalDateTime.now().isAfter(task.getEstimateEndTime())){
+        if(LocalDate.now().isAfter(task.getEstimateEndTime())){
             this.repository.markTaskAsFinishedAndLate(id);
         }else{
             this.repository.markTaskAsFinished(id);
@@ -118,7 +118,7 @@ public class TaskService {
                     .orElseThrow(() -> new ToDoExceptions("task not found", HttpStatus.NOT_FOUND));
             this.repository.delete(task);
             return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
+        } catch (ToDoExceptions e) {
             ToDoExceptions.getLogger().error("Error occurred when deleting task with ID {}: {}", id, HttpStatus.NOT_FOUND, e, e.getMessage(), e.getStackTrace());
             return ResponseEntity.notFound().build();
         }

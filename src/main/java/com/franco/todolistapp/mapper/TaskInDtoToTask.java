@@ -6,7 +6,7 @@ import com.franco.todolistapp.service.dto.TaskInDto;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Component
 public class TaskInDtoToTask implements IMapper<TaskInDto, Task>{
@@ -17,7 +17,7 @@ public class TaskInDtoToTask implements IMapper<TaskInDto, Task>{
         task.setTitle(in.getTitle());
         task.setDescription(in.getDescription());
         task.setEstimateEndTime(in.getEstimateEndTime());
-        task.setDateOfCreation(LocalDateTime.now());
+        task.setDateOfCreation(LocalDate.now());
         task.setFinished(false);
         task.setTaskStatus(TaskStatus.ON_TIME);
 

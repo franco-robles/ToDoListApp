@@ -3,7 +3,7 @@ package com.franco.todolistapp.persistance.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 
@@ -19,9 +19,9 @@ public class Task {
     @Schema(description = " description task ", example = "read a book")
     private String description;
     @Schema(description = "date of task creation", example = "2045-09-12")
-    private LocalDateTime dateOfCreation;
+    private LocalDate dateOfCreation;
     @Schema(description = "estimated time to complete the task", example = "2045-10-12")
-    private LocalDateTime estimateEndTime;
+    private LocalDate estimateEndTime;
     @Schema(description = "flag to check if the task was finished or not", example = "false")
     private boolean finished;
     @Schema(description = "flag to find out if the task was completed after or before the end time ", example = "ON_TIME")
@@ -52,19 +52,19 @@ public class Task {
         this.description = description;
     }
 
-    public LocalDateTime getDateOfCreation() {
+    public LocalDate getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(LocalDateTime dateOfCreation) {
+    public void setDateOfCreation(LocalDate dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 
-    public LocalDateTime getEstimateEndTime() {
+    public LocalDate getEstimateEndTime() {
         return estimateEndTime;
     }
 
-    public void setEstimateEndTime(LocalDateTime estimateEndTime) {
+    public void setEstimateEndTime(LocalDate estimateEndTime) {
         this.estimateEndTime = estimateEndTime;
     }
 
