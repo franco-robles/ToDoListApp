@@ -47,7 +47,7 @@ To install the project, follow these steps:
 ## Tests 
  The ToDoListApp project uses unit tests to ensure the quality and reliability of the code. Unit tests are written for each class or function to verify that it behaves as expected. 
  
- **TaskService** 
+### TaskService
 The TaskService layer is responsible for interacting with taskRepository to create, read, update, and delete tasks. The unit tests for the TaskService layer have a coverage of 100%. The following unit tests have been added to verify the functionality of the TaskService: 
  * Create task
  * Read task
